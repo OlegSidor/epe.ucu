@@ -10,20 +10,28 @@ $config = [
     'language' => 'uk-UA',
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
-        '@npm'   => '@vendor/npm-asset',
+        '@npm' => '@vendor/npm-asset',
     ],
     'modules' => [
         'user' => [
             'class' => 'dektrium\user\Module',
             'enableFlashMessages' => false,
-            'admins' => ['OldNeer'],
+            'adminPermission' => 'admin',
+            'layout' => '@app/modules/admin/views/layouts/main',
         ],
         'admin' => [
             'class' => 'app\modules\admin\Module',
             'layout' => 'main',
         ],
-        'rbac' => 'dektrium\rbac\RbacWebModule',
-        'treemanager' =>  [
+        'rbac' => [
+            'class' => 'dektrium\rbac\RbacWebModule',
+            'adminPermission' => 'admin',
+            'layout' => '@app/modules/admin/views/layouts/main',
+            'controllerMap' => [
+                'permission' => 'app\controllers\rbac\PermissionController'
+            ],
+        ],
+        'treemanager' => [
             'class' => '\kartik\tree\Module',
         ],
     ],
@@ -31,11 +39,19 @@ $config = [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'GCrgye431Z1j2up4sl75Z32iafDvHSXy',
-            'baseUrl'=> '',
+            'baseUrl' => '',
         ],
         'authManager' => [
             'class' => '\dektrium\rbac\components\DbManager',
-            'defaultRoles' => ['guest', 'user'],
+            'defaultRoles' => ['user'],
+            'cache' => 'yii\caching\FileCache',
+        ],
+        'view' => [
+            'theme' => [
+                'pathMap' => [
+                    '@dektrium/rbac/views' => '@app/views/rbac'
+                ],
+            ],
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
