@@ -2,7 +2,8 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-
+use app\models\Tabs;
+use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $searchModel app\modules\admin\models\TabsSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -19,12 +20,8 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php if (Yii::$app->user->can('createTabs')): ?>
             <?= Html::a(Yii::t('app', 'Create'), ['create'], ['class' => 'btn btn-success']) ?>
             <?php endif; ?>
-            <?php if (Yii::$app->user->can('moveTabs')): ?>
-                <?= Html::a(Yii::t('app', 'Move'), ['move'], ['class' => 'btn btn-primary']) ?>
-            <?php endif; ?>
         </p>
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -33,7 +30,13 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'name',
-            'url:url',
+            [
+                'attribute' => 'url',
+                'value' => function (Tabs $data) {
+                    return Html::a(Html::encode($data->url), Url::to(['/'.$data->url]));
+                },
+                'format' => 'raw',
+            ],
 
             [
                 'class' => 'yii\grid\ActionColumn',

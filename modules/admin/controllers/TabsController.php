@@ -23,7 +23,7 @@ class TabsController extends Controller
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class'   => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
                 ],
@@ -39,11 +39,11 @@ class TabsController extends Controller
     public function actionIndex()
     {
         $this->can('viewTabs');
-        $searchModel = new TabsSearch();
+        $searchModel  = new TabsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
+            'searchModel'  => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
@@ -64,18 +64,18 @@ class TabsController extends Controller
             return $this->redirect(['index']);
         }
 
-        $parents = ArrayHelper::map(Tabs::find()->asArray()->all(), 'id', 'name');
+        $parents    = ArrayHelper::map(Tabs::find()->asArray()->all(), 'id', 'name');
         $parents[0] = Yii::t('app', 'Menu');
         ksort($parents);
 
         $Tabs = ArrayHelper::index(Tabs::find()->asArray()->all(), 'id');
 
-        $items = $this->generateTree($Tabs, 1);
+        $items = Tabs::generateTree($Tabs, 0);
 
         return $this->render('create', [
-            'model' => $model,
+            'model'   => $model,
             'parents' => $parents,
-            'items' => $items,
+            'items'   => $items,
         ]);
     }
 
@@ -97,19 +97,18 @@ class TabsController extends Controller
             return $this->redirect(['index']);
         }
 
-        $parents = ArrayHelper::map(Tabs::find()->asArray()->all(), 'id', 'name');
+        $parents    = ArrayHelper::map(Tabs::find()->asArray()->all(), 'id', 'name');
         $parents[0] = Yii::t('app', 'Menu');
         ksort($parents);
 
-        $Tabs = ArrayHelper::index(Tabs::find()->asArray()->all(), 'id');
-
-        $items = $this->generateTree($Tabs, 1);
+        $Tabs  = ArrayHelper::index(Tabs::find()->asArray()->all(), 'id');
+        $items = Tabs::generateTree($Tabs, 0);
 
 
         return $this->render('update', [
-            'model' => $model,
+            'model'   => $model,
             'parents' => $parents,
-            'items' => $items,
+            'items'   => $items,
         ]);
     }
 
@@ -127,17 +126,24 @@ class TabsController extends Controller
     public function actionDelete($id)
     {
         $this->can('deleteTabs');
+        $this->delChilds($id);
         $this->findModel($id)->delete();
-
         return $this->redirect(['index']);
     }
 
     /**
-     * @throws ForbiddenHttpException
+     * @param $id
+     *
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
      */
-    public function actionMove()
+    public function delChilds($id)
     {
-        $this->can('moveTabs');
+        $childrens = Tabs::find()->where(['parent' => $id])->all();
+        foreach ($childrens as $children) {
+            $this->delChilds($children->id);
+            $children->delete();
+        }
     }
 
     /**
@@ -158,71 +164,15 @@ class TabsController extends Controller
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
 
-
-    /**
-     * @param $items
-     * @param $url
-     *
-     * @return array
-     */
-    public function generateTree($items, $url)
-    {
-        $parents = ArrayHelper::map($items, 'id', 'parent');
-        $arr = [];
-        foreach ($items as $item) {
-            //            print_r($item['name']."\n");
-            if (!$item['parent']) {
-                $arr[$item['id']]['label'] = $item['name'];
-                if($url) $arr[$item['id']]['url'] = $item['url'];
-            } else {
-                $path_to_root = $this->findRoot($item['parent'], $parents);
-                $path_to_root = array_reverse($path_to_root);
-                $path = &$this->getChild($path_to_root, $arr);
-                $path[$item['id']]['label'] = $item['name'];
-                if ($url) $path[$item['id']]['url'] = $item['url'];
-            }
-        }
-        return $arr;
-    }
-
-    /**
-     * @param       $parent
-     * @param       $parents
-     * @param array $path
-     *
-     * @return array
-     */
-    public function findRoot($parent, $parents, &$path = [])
-    {
-        array_push($path, $parent);
-        if ($parents[$parent]) {
-            $this->findRoot($parents[$parent], $parents, $path);
-        }
-        return $path;
-    }
-
-    /**
-     * @param $path
-     * @param $arr
-     *
-     * @return mixed
-     */
-    public function &getChild($path, &$arr)
-    {
-        foreach ($path as $item){
-            $arr = &$arr[$item]['items'];
-        }
-        return $arr;
-    }
-
     /**
      * @param $what
      *
      * @throws ForbiddenHttpException
      */
-    public function can($what){
-        if(!Yii::$app->user->can($what)){
-            throw new ForbiddenHttpException(Yii::t('app', 'You can\'t do that'));
+    public function can($what)
+    {
+        if (!Yii::$app->user->can($what)) {
+            throw new ForbiddenHttpException(Yii::t('app', 'You are not allowed to perform this action.'));
         }
     }
 }

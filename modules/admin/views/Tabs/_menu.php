@@ -3,7 +3,6 @@
 
 /* @var $this yii\web\View */
 
-use yii\helpers\Html;
 use yii\bootstrap\NavBar;
 use kartik\nav\NavX;
 ?>

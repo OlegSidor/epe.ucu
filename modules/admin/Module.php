@@ -52,6 +52,6 @@ class Module extends \yii\base\Module
      */
     public function checkAccess()
     {
-        return \Yii::$app->user->can('viewAdmin');
+        return \Yii::$app->user->can('adminView');
     }
 }

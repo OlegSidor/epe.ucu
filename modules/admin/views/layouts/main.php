@@ -42,6 +42,7 @@ AppAsset::register($this);
         'items' => [
             ['label' => Yii::t('app', 'Home'), 'url' => ['/admin']],
             ['label' => Yii::t('app', 'Tabs'), 'url' => ['/admin/tabs'], 'visible' => Yii::$app->user->can('viewTabs'), 'active' => Yii::$app->controller->id == 'tabs'],
+            ['label' => Yii::t('app', 'Pages'), 'url' => ['/admin/pages'], 'visible' => Yii::$app->user->can('viewPages'), 'active' => Yii::$app->controller->id == 'pages'],
             ['label' => Yii::t('app', 'Permissions'), 'url' => ['/rbac'], 'visible' => Yii::$app->user->can('admin'), 'active' => Yii::$app->controller->module->id == 'rbac' || Yii::$app->controller->id == 'admin'],
             Yii::$app->user->isGuest ? (
             ['label' => 'Login', 'url' => ['/site/login']]

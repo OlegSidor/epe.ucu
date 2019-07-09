@@ -1,34 +1,35 @@
 <?php
 
 $params = require __DIR__ . '/params.php';
-$db = require __DIR__ . '/db.php';
+$db     = require __DIR__ . '/db.php';
 
 $config = [
-    'id' => 'basic',
-    'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
-    'language' => 'uk-UA',
-    'aliases' => [
+    'id'         => 'basic',
+    'name'       => 'UKU',
+    'basePath'   => dirname(__DIR__),
+    'bootstrap'  => ['log'],
+    'language'   => 'uk-UA',
+    'aliases'    => [
         '@bower' => '@vendor/bower-asset',
-        '@npm' => '@vendor/npm-asset',
+        '@npm'   => '@vendor/npm-asset',
     ],
-    'modules' => [
-        'user' => [
-            'class' => 'dektrium\user\Module',
+    'modules'    => [
+        'user'        => [
+            'class'               => 'dektrium\user\Module',
             'enableFlashMessages' => false,
-            'adminPermission' => 'admin',
-            'layout' => '@app/modules/admin/views/layouts/main',
+            'adminPermission'     => 'admin',
+            'layout'              => '@app/modules/admin/views/layouts/main',
         ],
-        'admin' => [
-            'class' => 'app\modules\admin\Module',
+        'admin'       => [
+            'class'  => 'app\modules\admin\Module',
             'layout' => 'main',
         ],
-        'rbac' => [
-            'class' => 'dektrium\rbac\RbacWebModule',
+        'rbac'        => [
+            'class'           => 'dektrium\rbac\RbacWebModule',
             'adminPermission' => 'admin',
-            'layout' => '@app/modules/admin/views/layouts/main',
-            'controllerMap' => [
-                'permission' => 'app\controllers\rbac\PermissionController'
+            'layout'          => '@app/modules/admin/views/layouts/main',
+            'controllerMap'   => [
+                'permission' => 'app\controllers\rbac\PermissionController',
             ],
         ],
         'treemanager' => [
@@ -36,68 +37,70 @@ $config = [
         ],
     ],
     'components' => [
-        'request' => [
+        'request'      => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'GCrgye431Z1j2up4sl75Z32iafDvHSXy',
-            'baseUrl' => '',
+            'baseUrl'             => '',
         ],
-        'authManager' => [
-            'class' => '\dektrium\rbac\components\DbManager',
+        'authManager'  => [
+            'class'        => '\dektrium\rbac\components\DbManager',
             'defaultRoles' => ['user'],
-            'cache' => 'yii\caching\FileCache',
+            'cache'        => 'yii\caching\FileCache',
         ],
-        'view' => [
+        'view'         => [
             'theme' => [
                 'pathMap' => [
-                    '@dektrium/rbac/views' => '@app/views/rbac'
+                    '@dektrium/rbac/views' => '@app/views/rbac',
                 ],
             ],
         ],
-        'cache' => [
+        'cache'        => [
             'class' => 'yii\caching\FileCache',
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        'mailer' => [
-            'class' => 'yii\swiftmailer\Mailer',
+        'mailer'       => [
+            'class'            => 'yii\swiftmailer\Mailer',
             // send all mails to a file by default. You have to set
             // 'useFileTransport' to false and configure a transport
             // for the mailer to send real emails.
             'useFileTransport' => true,
         ],
-        'log' => [
+        'log'          => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
-            'targets' => [
+            'targets'    => [
                 [
-                    'class' => 'yii\log\FileTarget',
+                    'class'  => 'yii\log\FileTarget',
                     'levels' => ['error', 'warning'],
                 ],
             ],
         ],
-        'db' => $db,
+        'db'           => $db,
 
         'urlManager' => [
             'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            'rules' => [
-                '' => 'site/index',
+            'showScriptName'  => false,
+            'rules'           => [
+                ''         => 'site/index',
+                'admin'    => '/admin',
+                '<url:\w+>' => 'site/view',
             ],
         ],
     ],
-    'params' => $params,
+    'params'     => $params,
 ];
 
 if (YII_ENV_DEV) {
     // configuration adjustments for 'dev' environment
-    $config['bootstrap'][] = 'debug';
+    $config['bootstrap'][]      = 'debug';
     $config['modules']['debug'] = [
         'class' => 'yii\debug\Module',
         // uncomment the following to add your IP if you are not connecting from localhost.
         //'allowedIPs' => ['127.0.0.1', '::1'],
     ];
 
-    $config['bootstrap'][] = 'gii';
+    $config['bootstrap'][]    = 'gii';
     $config['modules']['gii'] = [
         'class' => 'yii\gii\Module',
         // uncomment the following to add your IP if you are not connecting from localhost.

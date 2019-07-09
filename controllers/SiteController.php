@@ -2,9 +2,13 @@
 
 namespace app\controllers;
 
+use app\models\Pages;
+use app\models\Tabs;
 use Yii;
 use yii\filters\AccessControl;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
@@ -39,6 +43,20 @@ class SiteController extends Controller
     }
 
     /**
+     * @param $action
+     *
+     * @return bool
+     * @throws \yii\web\BadRequestHttpException
+     */
+    public function beforeAction($action)
+    {
+        $Tabs = ArrayHelper::index(Tabs::find()->asArray()->all(), 'id');
+        $items = Tabs::generateTree($Tabs, 1);
+        $this->view->params['navbar'] = $items;
+        return parent::beforeAction($action);
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function actions()
@@ -65,64 +83,36 @@ class SiteController extends Controller
     }
 
     /**
-     * Login action.
-     *
-     * @return Response|string
-     */
-    public function actionLogin()
-    {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
-        }
-
-        $model->password = '';
-        return $this->render('login', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Logout action.
-     *
-     * @return Response
-     */
-    public function actionLogout()
-    {
-        Yii::$app->user->logout();
-
-        return $this->goHome();
-    }
-
-    /**
-     * Displays contact page.
-     *
-     * @return Response|string
-     */
-    public function actionContact()
-    {
-        $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
-            Yii::$app->session->setFlash('contactFormSubmitted');
-
-            return $this->refresh();
-        }
-        return $this->render('contact', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Displays about page.
+     * @param $url
      *
      * @return string
+     * @throws NotFoundHttpException
      */
-    public function actionAbout()
-    {
-        return $this->render('about');
+    public function actionView($url){
+
+        $model = $this->findPage($url);
+        return $this->render('view', [
+            'model' => $model,
+        ]);
     }
+
+
+    /**
+     * Finds the Pages model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     *
+     * @param string $url
+     *
+     * @return Pages|array|\yii\db\ActiveRecord
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findPage($url)
+    {
+        if (($model = Pages::find()->where(['url' => $url])->one()) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+    }
+
 }

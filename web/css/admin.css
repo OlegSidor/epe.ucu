@@ -4,3 +4,7 @@
     border-top-right-radius: 5px;
     background: #e6e6e6;
 }
+
+.cke_dialog_tab[id^=cke_Upload_]{
+    display: none!important;
+}
