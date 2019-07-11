@@ -8,3 +8,14 @@
 .cke_dialog_tab[id^=cke_Upload_]{
     display: none!important;
 }
+
+.tabs-prev {
+    width: 100%;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background: gray;
+    color: #fff;
+    font-size: 20px;
+    display: block;
+}

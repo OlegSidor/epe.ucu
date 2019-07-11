@@ -84,6 +84,7 @@ $config = [
             'rules'           => [
                 ''         => 'site/index',
                 'admin'    => '/admin',
+                'get-tabs' => '/site/get-tabs',
                 '<url:\w+>' => 'site/view',
             ],
         ],

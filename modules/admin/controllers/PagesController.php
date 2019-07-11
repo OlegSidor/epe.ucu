@@ -2,9 +2,11 @@
 
 namespace app\modules\admin\controllers;
 
+use app\models\Tabs;
 use Yii;
 use app\models\Pages;
 use app\modules\admin\models\PagesSearch;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -22,7 +24,7 @@ class PagesController extends Controller
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class'   => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
                 ],
@@ -38,11 +40,11 @@ class PagesController extends Controller
     public function actionIndex()
     {
         $this->can('viewPages');
-        $searchModel = new PagesSearch();
+        $searchModel  = new PagesSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
+            'searchModel'  => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
@@ -79,8 +81,14 @@ class PagesController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
+        $items_raw = ArrayHelper::map(Tabs::find()->where(['parent' => 0])->asArray()->all(), 'id', 'name');
+        $items     = [['Menu']];
+        foreach ($items_raw as $item) {
+            array_push($items, [$item]);
+        }
         return $this->render('create', [
             'model' => $model,
+            'items' => $items,
         ]);
     }
 
@@ -102,9 +110,14 @@ class PagesController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
-
+        $items_raw = ArrayHelper::map(Tabs::find()->where(['parent' => 0])->asArray()->all(), 'id', 'name');
+        $items     = [['Menu']];
+        foreach ($items_raw as $item) {
+            array_push($items, [$item]);
+        }
         return $this->render('update', [
             'model' => $model,
+            'items' => $items,
         ]);
     }
 
@@ -130,7 +143,9 @@ class PagesController extends Controller
     /**
      * Finds the Pages model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
+     *
      * @param integer $id
+     *
      * @return Pages the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */

@@ -27,7 +27,8 @@
         "kartik-v/yii2-nav-x": "dev-master",
         "kartik-v/yii2-widget-select2": "@dev",
         "yiisoft/yii2-bootstrap4": "^2.0",
-        "2amigos/yii2-ckeditor-widget": "^1.0@dev"
+        "2amigos/yii2-ckeditor-widget": "^1.0@dev",
+        "rmrevin/yii2-fontawesome": "~3.4"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

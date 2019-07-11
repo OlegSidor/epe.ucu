@@ -64,7 +64,7 @@ class TabsController extends Controller
             return $this->redirect(['index']);
         }
 
-        $parents    = ArrayHelper::map(Tabs::find()->asArray()->all(), 'id', 'name');
+        $parents    = ArrayHelper::map(Tabs::find()->where(['parent' => 0])->asArray()->all(), 'id', 'name');
         $parents[0] = Yii::t('app', 'Menu');
         ksort($parents);
 
@@ -97,7 +97,7 @@ class TabsController extends Controller
             return $this->redirect(['index']);
         }
 
-        $parents    = ArrayHelper::map(Tabs::find()->asArray()->all(), 'id', 'name');
+        $parents    = ArrayHelper::map(Tabs::find()->where(['parent' => 0])->asArray()->all(), 'id', 'name');
         $parents[0] = Yii::t('app', 'Menu');
         ksort($parents);
 

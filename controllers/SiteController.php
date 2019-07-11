@@ -50,8 +50,9 @@ class SiteController extends Controller
      */
     public function beforeAction($action)
     {
+
         $Tabs = ArrayHelper::index(Tabs::find()->asArray()->all(), 'id');
-        $items = Tabs::generateTree($Tabs, 1);
+        $items = Tabs::generateTree($Tabs, 1, 1);
         $this->view->params['navbar'] = $items;
         return parent::beforeAction($action);
     }
@@ -96,6 +97,21 @@ class SiteController extends Controller
         ]);
     }
 
+
+    /**
+     * @return string
+     */
+    public function actionGetTabs($parent_name)
+    {
+        $childs      = '';
+        if ($parent_name != "Menu") {
+            $parent = Tabs::findOne(['name' => $parent_name]);
+            $childs = Tabs::findAll(['parent' => $parent->{'id'}]);
+        } else {
+            $childs = Tabs::findAll(['parent' => 0]);
+        }
+        return $this->renderAjax('tabs_tile', ['childs' => $childs]);
+    }
 
     /**
      * Finds the Pages model based on its primary key value.

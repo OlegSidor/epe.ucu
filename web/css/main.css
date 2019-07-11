@@ -1,0 +1,252 @@
+.tab_tile{
+    height: 150px;
+    margin-bottom: 20px;
+}
+.tab_tile img {
+    height: 100%;
+    width: 100%;
+    filter: blur(2px);
+    object-fit: cover;
+}
+
+.tab_tile .title{
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.text-black {
+    color: black !important;
+}
+.tabs-prev {
+    display: none;
+}
+
+.navbar{
+    background-color: #840000;
+    border-radius: 0;
+    display: table;
+    height: 100px;
+    width: 100%;
+}
+.search{
+    float: right;
+}
+.navbar-nav{
+    float: left;
+    margin: 0;
+}
+.navbar-nav > li {
+    float: left;
+}
+.nav-wrap{
+    height: 100%;
+    width: 90%;
+    display: inherit;
+    margin: 0 auto;
+}
+.nav-content-wrap{
+    display: table-cell;
+    vertical-align: middle;
+    width: 100%;
+}
+
+.navbar-toggle.show{
+    display: block;
+}
+.search .form-group{
+    display: inline-block;
+}
+.search input{
+    display: inline-block;
+    width: auto;
+}
+
+.nav li a{
+    color: white;
+    position: relative;
+    font-size: 15px;
+}
+
+.nav > li > a:hover, .nav > li > a:focus{
+    background: none;
+}
+
+.nav > li > a:after{
+    display: block;
+    position: absolute;
+    bottom: 0;
+    height: 2px;
+    content: " ";
+    background: white;
+    width: 0;
+    left: 50%;
+    transform: translate(-50%);
+    transition-duration: 0.5s;
+
+}
+.nav > li > a:hover:after, .nav > li > a:focus:after{
+    width: 100%;
+}
+
+.navbar-brand img{
+    width: 75px;
+}
+.icon-bar{
+    background: white;
+}
+
+.search * {
+    outline: 0;
+}
+.search .form-control{
+    outline: 0;
+    border: none;
+    box-shadow: none;
+    background: none;
+    border-bottom: 1px solid white;
+    border-radius: 0;
+    color: white;
+}
+
+.search button{
+    background: none;
+    color: white;
+    border: none;
+}
+
+.full-nav-wrap{
+    position: absolute;
+    min-width: 100%;
+    min-height: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(17,17,17,0.8);
+    z-index: 2;
+    display: none;
+}
+.full-nav-wrap .container {
+    color: white;
+    margin-top: 200px;
+}
+.full-nav-wrap .container li.parent a {
+    color: white;
+    font-weight: bold;
+}
+.full-nav-wrap .container li a:hover:before {
+    content: "";
+    display: block;
+    width: 2px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: -20px;
+    background: white;
+}
+.full-nav-wrap .container li a {
+    color: lightgrey;
+    opacity: 1;
+    text-decoration: none;
+    position: relative;
+}
+.full-nav-wrap .container li {
+    list-style: none;
+    font-size: 20px;
+}
+.full-nav-wrap .nav-container{
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0;
+}
+.full-nav-wrap .container .section{
+    display: inline-block;
+    list-style: none;
+    padding-left: 40px;
+    padding-right: 40px;
+    width: 25%;
+    margin-bottom: 40px;
+    border-right: 1px solid white;
+    border-left: 1px solid white;
+}
+
+.full-nav-wrap .search{
+    float: none;
+    margin-bottom: 50px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.full-nav-wrap .search .form-group, .full-nav-wrap .search .form-group input {
+    width: 99%;
+}
+
+.full-nav-wrap .nav-container .section ul{
+    padding: 0;
+}
+.full-nav-wrap .row{
+    padding: 15px;
+}
+
+.full-nav-wrap .row .node li.parent a {
+    opacity: 1;
+}
+.full-nav-wrap .row .node a {
+    color: white;
+    text-decoration: none;
+    opacity: 0.7;
+    font-size: 17px;
+}
+
+
+.close {
+    color: white;
+    padding: 50px;
+    opacity: 0.8;
+    font-size: 25px;
+}
+
+.close:hover, .close:focus{
+    color: white;
+    opacity: 1;
+}
+
+.navbar-form{
+    box-shadow: none;
+    margin: 0;
+}
+
+
+@media (max-width: 1024px) {
+    .nav.navbar-nav .nav + .nav + .nav + .nav{
+        display: none;
+    }
+
+}
+@media (max-width: 825px) {
+    .nav.navbar-nav .nav + .nav + .nav{
+        display: none;
+    }
+
+}
+
+@media (max-width: 425px) {
+    .full-nav-wrap .container .section{
+        width: 100% !important;
+    }
+}
+@media (max-width: 767px) {
+    .nav-content{
+        display: none;
+    }
+    .navbar-toggle.show{
+        display: none;
+    }
+    .full-nav-wrap .container .section{
+        width: 50%;
+    }
+}

@@ -7,6 +7,7 @@ use dosamigos\ckeditor\CKEditor;
 /* @var $this yii\web\View */
 /* @var $model app\models\Pages */
 /* @var $form yii\widgets\ActiveForm */
+$this->registerJsVar('items', $items);
 ?>
 
 <div class="pages-form">
@@ -23,8 +24,9 @@ use dosamigos\ckeditor\CKEditor;
         'kcfinder'      => true,
         'clientOptions' => [
             'language'      => 'uk',
-            'extraPlugins'  => 'iframe,find,divarea,colorbutton,font,btgrid,video,youtube,image2, tableresize,bootstrapTabs,',
+            'extraPlugins'  => 'iframe,find,divarea,colorbutton,font,btgrid,video,youtube,image2, tableresize,bootstrapTabs,Tabs',
             'removePlugins' => 'image',
+            'allowedContent' => true,
         ],
         'kcfOptions'    => [
             'files' => [
@@ -45,6 +47,7 @@ use dosamigos\ckeditor\CKEditor;
     <?php $this->registerJs("CKEDITOR.plugins.addExternal('video', '/js/CKeditorPlugins/video/plugin.js', '');"); ?>
     <?php $this->registerJs("CKEDITOR.plugins.addExternal('youtube', '/js/CKeditorPlugins/youtube/plugin.js', '');"); ?>
     <?php $this->registerJs("CKEDITOR.plugins.addExternal('bootstrapTabs', '/js/CKeditorPlugins/bootstrapTabs/plugin.js', '');"); ?>
+    <?php $this->registerJs("CKEDITOR.plugins.addExternal('Tabs', '/js/CKeditorPlugins/Tabs/plugin.js', '');"); ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
