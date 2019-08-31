@@ -42,10 +42,12 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            ['label' => Yii::t('app', 'News'), 'url' => ['/admin'], 'visible' => Yii::$app->user->can('viewNews'),'active' => Yii::$app->controller->id == 'news'],
+            ['label' => Yii::t('app', 'Home'), 'url' => ['/admin/'], 'visible' => Yii::$app->user->can('adminView'),'active' => Yii::$app->controller->id == 'default'],
+            ['label' => Yii::t('app', 'News'), 'url' => ['/admin/news'], 'visible' => Yii::$app->user->can('viewNews'),'active' => Yii::$app->controller->id == 'news'],
             ['label' => Yii::t('app', 'Tabs'), 'url' => ['/admin/tabs'], 'visible' => Yii::$app->user->can('viewTabs'), 'active' => Yii::$app->controller->id == 'tabs'],
             ['label' => Yii::t('app', 'Pages'), 'url' => ['/admin/pages'], 'visible' => Yii::$app->user->can('viewPages'), 'active' => Yii::$app->controller->id == 'pages'],
             ['label' => Yii::t('app', 'Permissions'), 'url' => ['/rbac'], 'visible' => Yii::$app->user->can('admin'), 'active' => Yii::$app->controller->module->id == 'rbac' || Yii::$app->controller->id == 'admin'],
+            ['label' => Yii::t('app', 'TextBlocks'), 'url' => ['/admin/text-blocks'], 'visible' => Yii::$app->user->can('viewTextBlocks'), 'active' => Yii::$app->controller->id == 'text-blocks'],
             Yii::$app->user->isGuest ? (
             ['label' => 'Login', 'url' => ['/site/login']]
             ) : (

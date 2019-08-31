@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\models\News;
 use app\models\Pages;
 use app\models\Tabs;
+use app\models\TextBlocks;
 use Yii;
 use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
@@ -83,12 +84,14 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $news  = News::find()->asArray()->all();
+        $textBlocks = TextBlocks::find()->asArray()->all();
+        $textBlocks = ArrayHelper::index($textBlocks, 'name');
         $items = [];
         foreach ($news as $new) {
             array_push($items,
                 Html::tag('a', Html::img($new['img']) . Html::tag('div', Html::tag('h3', $new['title']) . Html::tag('p', $new['short_desc']), ['class' => 'desc']), ['class' => 'new', 'href' => '/news/' . $new['url']]));
         }
-        return $this->render('index', ['news' => $items]);
+        return $this->render('index', ['news' => $items, 'textBlocks' => $textBlocks]);
     }
 
     /**

@@ -4,6 +4,8 @@ use evgeniyrru\yii2slick\Slick;
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
+/* @var $textBlocks app\models\TextBlocks */
+
 
 $this->title = Yii::t('app', 'Бакалаврська програма | Етика Політика Економіка');
 ?>
@@ -23,6 +25,6 @@ $this->title = Yii::t('app', 'Бакалаврська програма | Ети
 
     ]); ?>
     <div class="container main">
-
+        <?=$textBlocks['main_page_text']['text']?>
     </div>
 </div>

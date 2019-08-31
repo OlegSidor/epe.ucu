@@ -1,7 +1,7 @@
 <?php
 /* @var $this yii\web\View */
 
-/** @var array $childs */
+/** @var $childs array  */
 
 use yii\helpers\Html;
 

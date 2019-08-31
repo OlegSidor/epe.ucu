@@ -46,6 +46,15 @@ $this->title = Yii::t('app', 'Admin');
                 </div>
             </a>
         <?php endif; ?>
+        <?php if (Yii::$app->user->can('viewTextBlocks')): ?>
+            <a href="/admin/text-blocks">
+                <div class="col-lg-3 col-md-6 col-sm-12 admin_tabs" style="background: #DA4453;
+                background: -webkit-linear-gradient(to right, #89216B, #DA4453);
+                background: linear-gradient(to right, #89216B, #DA4453);">
+                    <div class="title"  style="color: white;"><span><?= Yii::t('app', 'TextBlocks') ?><span></div>
+                </div>
+            </a>
+        <?php endif; ?>
     </div>
 
 </div>
