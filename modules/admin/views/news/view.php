@@ -4,14 +4,14 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Pages */
+/* @var $model app\models\News */
 
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Pages'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'News'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="pages-view">
+<div class="news-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -31,15 +31,23 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'title',
+            'short_desc',
+            'date',
             [
                 'attribute' => 'url',
                 'value' => function ($data){
-                    return Html::a($data->{'url'}, '/'.$data->{'url'});
+                    return Html::a($data->{'url'}, '/news/'.$data->{'url'});
                 },
                 'format' => 'html'
             ],
-
-            'content',
+            [
+                'attribute' => 'img',
+                'value' => function ($data){
+                    return Html::img($data->{'img'}, ['width' => '200px']);
+                },
+                'format' => 'html'
+            ],
+            'content:html'
         ],
     ]) ?>
 

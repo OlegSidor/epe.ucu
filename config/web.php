@@ -5,7 +5,7 @@ $db     = require __DIR__ . '/db.php';
 
 $config = [
     'id'         => 'basic',
-    'name'       => 'UKU',
+    'name'       => 'EPE',
     'basePath'   => dirname(__DIR__),
     'bootstrap'  => ['log'],
     'language'   => 'uk-UA',
@@ -21,8 +21,8 @@ $config = [
             'layout'              => '@app/modules/admin/views/layouts/main',
         ],
         'admin'       => [
-            'class'  => 'app\modules\admin\Module',
-            'layout' => 'main',
+            'class'        => 'app\modules\admin\Module',
+            'layout'       => 'main',
         ],
         'rbac'        => [
             'class'           => 'dektrium\rbac\RbacWebModule',
@@ -45,7 +45,7 @@ $config = [
         'authManager'  => [
             'class'        => '\dektrium\rbac\components\DbManager',
             'defaultRoles' => ['user'],
-            'cache'        => 'yii\caching\FileCache',
+//            'cache'        => 'yii\caching\FileCache',
         ],
         'view'         => [
             'theme' => [
@@ -82,10 +82,28 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName'  => false,
             'rules'           => [
-                ''         => 'site/index',
-                'admin'    => '/admin',
-                'get-tabs' => '/site/get-tabs',
-                '<url:\w+>' => 'site/view',
+                '' => 'site/index',
+
+                '<admin:(admin|admin\/)>'                                              => '/admin',
+                'admin/<controller:([-\w]+|[-\w]+\/)>'                                 => '/admin/<controller>',
+                'admin/<controller:([-\w]+|[-\w]+\/)>/<action:([-\w]+|[-\w]+\/)>'      => '/admin/<controller>/<action>',
+                'admin/<controller:([-\w]+|[-\w]+\/)>/<action:([-\w]+|[-\w]+\/)>/<id>' => '/admin/<controller>/<action>/<id>',
+
+
+                '<rbac:(rbac|rbac\/)>'                                                => '/rbac',
+                'rbac/<controller:([-\w]+|[-\w]+\/)>'                                 => '/rbac/<controller>',
+                'rbac/<controller:([-\w]+|[-\w]+\/)>/<action:([-\w]+|[-\w]+\/)>'      => '/rbac/<controller>/<action>',
+                'rbac/<controller:([-\w]+|[-\w]+\/)>/<action:([-\w]+|[-\w]+\/)>/<id>' => '/rbac/<controller>/<action>/<id>',
+
+
+                '<user:(user|user\/)>'                                                => '/user',
+                'user/<controller:([-\w]+|[-\w]+\/)>'                                 => '/user/<controller>',
+                'user/<controller:([-\w]+|[-\w]+\/)>/<action:([-\w]+|[-\w]+\/)>'      => '/user/<controller>/<action>',
+                'user/<controller:([-\w]+|[-\w]+\/)>/<action:([-\w]+|[-\w]+\/)>/<id>' => '/user/<controller>/<action>/<id>',
+
+                'get-tabs'          => '/site/get-tabs',
+                'news/<url:[-\w]+>' => '/site/news',
+                '<url:.*>'          => 'site/view',
             ],
         ],
     ],
@@ -96,16 +114,16 @@ if (YII_ENV_DEV) {
     // configuration adjustments for 'dev' environment
     $config['bootstrap'][]      = 'debug';
     $config['modules']['debug'] = [
-        'class' => 'yii\debug\Module',
+        'class'      => 'yii\debug\Module',
         // uncomment the following to add your IP if you are not connecting from localhost.
-        //'allowedIPs' => ['127.0.0.1', '::1'],
+        'allowedIPs' => ['127.0.0.1', '31.128.253.162'],
     ];
 
     $config['bootstrap'][]    = 'gii';
     $config['modules']['gii'] = [
-        'class' => 'yii\gii\Module',
+        'class'      => 'yii\gii\Module',
         // uncomment the following to add your IP if you are not connecting from localhost.
-        //'allowedIPs' => ['127.0.0.1', '::1'],
+        'allowedIPs' => ['127.0.0.1', '31.128.253.162'],
     ];
 }
 

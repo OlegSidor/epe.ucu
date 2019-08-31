@@ -111,3 +111,40 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
+
+@media (min-width: 1305px) {
+    .container {
+        width: 90%;
+    }
+
+}
+.right-btns img {
+    width: 20px;
+    height: 20px;
+}
+.image-left{
+    float: left;
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 0 20px 0 0;
+}
+.image-right{
+    float: right;
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 0 0 0 20px;
+}
+.image-center{
+    text-align: center;
+}
+.image-center img{
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+}
+.site-error{
+    padding: 200px 0 !important;
+}

@@ -7,8 +7,8 @@ use kartik\select2\Select2;
 /* @var $this yii\web\View */
 /* @var $model app\models\Tabs */
 /* @var $form yii\widgets\ActiveForm */
-
-$this->registerJsFile('/js/tabs.js', ['dependence' => \yii\web\JqueryAsset::className()])
+$this->registerJsVar('id', 'tabs-img');
+$this->registerJsFile('/js/image-select.js', ['dependence' => \yii\web\JqueryAsset::className()])
 ?>
 
 <div class="tabs-form">

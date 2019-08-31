@@ -11,7 +11,9 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\modules\admin\assets\AppAsset;
 
-
+if (isset($this->params['breadcrumbs'])) {
+    array_unshift($this->params['breadcrumbs'], ['label' => Yii::t('app', 'Admin'), 'url' => '/admin']);
+}
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
@@ -40,7 +42,7 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            ['label' => Yii::t('app', 'Home'), 'url' => ['/admin']],
+            ['label' => Yii::t('app', 'News'), 'url' => ['/admin'], 'visible' => Yii::$app->user->can('viewNews'),'active' => Yii::$app->controller->id == 'news'],
             ['label' => Yii::t('app', 'Tabs'), 'url' => ['/admin/tabs'], 'visible' => Yii::$app->user->can('viewTabs'), 'active' => Yii::$app->controller->id == 'tabs'],
             ['label' => Yii::t('app', 'Pages'), 'url' => ['/admin/pages'], 'visible' => Yii::$app->user->can('viewPages'), 'active' => Yii::$app->controller->id == 'pages'],
             ['label' => Yii::t('app', 'Permissions'), 'url' => ['/rbac'], 'visible' => Yii::$app->user->can('admin'), 'active' => Yii::$app->controller->module->id == 'rbac' || Yii::$app->controller->id == 'admin'],

@@ -8,8 +8,14 @@ RewriteRule ^css/(.*)$ web/css/$1 [L]
 RewriteRule ^js/(.*)$ web/js/$1 [L]
 RewriteRule ^upload/(.*)$ web/upload/$1 [L]
 RewriteRule ^img/(.*)$ web/img/$1 [L]
+RewriteRule ^templates/(.*)$ web/templates/$1 [L]
+RewriteRule ^favicon\.ico web/favicon.ico [L]
 RewriteRule (.*) /web/$1
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule . /web/index.php
+
+<FilesMatch ".(flv|gif|jpg|jpeg|png|ico|swf|js|css|pdf)$">
+  Header set Cache-Control "max-age=2592000"
+</FilesMatch>

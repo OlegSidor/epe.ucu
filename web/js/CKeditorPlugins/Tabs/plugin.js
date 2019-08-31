@@ -10,6 +10,5 @@ CKEDITOR.plugins.add('Tabs', {
             toolbar: 'insert'
         });
         CKEDITOR.dialog.add('TabsDialog', this.path + 'dialogs/Tabs.js');
-        console.log(editor.filter.allowedContent);
     }
 });
