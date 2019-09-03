@@ -336,7 +336,9 @@ body {
     color: #b90000;
     font-size: 30px;
 }
-
+.main_tabs{
+    margin-top: 30px;
+}
 
 footer{
     background: #5d5d5d;

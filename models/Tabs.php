@@ -33,7 +33,7 @@ class Tabs extends \yii\db\ActiveRecord
     {
         return [
             [['name'], 'required'],
-            [['hidden'], 'boolean'],
+            [['hidden', 'show_in_main'], 'boolean'],
             [['position', 'parent'], 'integer'],
             [['name', 'url', 'img'], 'string', 'max' => 255],
         ];
@@ -52,6 +52,7 @@ class Tabs extends \yii\db\ActiveRecord
             'parent'   => Yii::t('app', 'Parent'),
             'img'      => Yii::t('app', 'Picture'),
             'hidden'      => Yii::t('app', 'hidden to full menu'),
+            'show_in_main'      => Yii::t('app', 'Show on main page'),
         ];
     }
 

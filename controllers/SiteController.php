@@ -87,11 +87,13 @@ class SiteController extends Controller
         $textBlocks = TextBlocks::find()->asArray()->all();
         $textBlocks = ArrayHelper::index($textBlocks, 'name');
         $items = [];
+        $mainTabs = Tabs::findAll(['show_in_main' => 1]);
+        $mainTabs_render = $this->renderAjax('tabs_tile', ['childs' => $mainTabs]);
         foreach ($news as $new) {
             array_push($items,
                 Html::tag('a', Html::img($new['img']) . Html::tag('div', Html::tag('h3', $new['title']) . Html::tag('p', $new['short_desc']), ['class' => 'desc']), ['class' => 'new', 'href' => '/news/' . $new['url']]));
         }
-        return $this->render('index', ['news' => $items, 'textBlocks' => $textBlocks]);
+        return $this->render('index', ['news' => $items, 'textBlocks' => $textBlocks, 'main_tabs' => $mainTabs_render]);
     }
 
     /**
