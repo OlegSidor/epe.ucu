@@ -40,7 +40,8 @@ class NewsController extends Controller
         $this->can('viewNews');
         $searchModel = new NewsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+        $dataProvider->setSort([
+            'defaultOrder' => ['date'=>SORT_DESC]]);
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -74,10 +75,9 @@ class NewsController extends Controller
     {
         $this->can('createNews');
         $model = new News();
-
+        $model->date = date('Y-m-d');
         if ($model->load(Yii::$app->request->post())) {
             $model->url = News::str2url($model->title);
-            $model->date = date('Y-m-d');
             if($model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             }
@@ -105,7 +105,6 @@ class NewsController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
             $model->url = News::str2url($model->title);
-            $model->date = date('Y-m-d H:i:s');
             if($model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             }

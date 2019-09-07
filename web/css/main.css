@@ -375,13 +375,21 @@ footer .information h2{
 .facebook{
     margin-top: 40px;
 }
-
+.upload-date{
+    margin-bottom: 20px;
+    font-size: 17px;
+    font-weight: bold;
+    color: #6c0000;
+}
 @media (max-width: 768px){
     .nav-content{
         display: none;
     }
     .right-btns{
         display: none;
+    }
+    .container.main{
+        width: 90%;
     }
 }
 

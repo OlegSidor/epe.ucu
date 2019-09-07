@@ -79,11 +79,17 @@ class SiteController extends Controller
     /**
      * Displays homepage.
      *
+     * @param null $search
+     *
      * @return string
      */
-    public function actionIndex()
+    public function actionIndex($search = null)
     {
-        $news  = News::find()->asArray()->all();
+//        if($search != null) return $this->search($search);
+        $news  = News::find()->orderBy('date DESC')->where('date>="'.date('Y-m-d', strtotime('1 month')).'"')->asArray()->all();
+        if(count($news)  < 5){
+            $news = News::find()->orderBy('date DESC')->limit(5)->asArray()->all();
+        }
         $textBlocks = TextBlocks::find()->asArray()->all();
         $textBlocks = ArrayHelper::index($textBlocks, 'name');
         $items = [];
@@ -94,6 +100,10 @@ class SiteController extends Controller
                 Html::tag('a', Html::img($new['img']) . Html::tag('div', Html::tag('h3', $new['title']) . Html::tag('p', $new['short_desc']), ['class' => 'desc']), ['class' => 'new', 'href' => '/news/' . $new['url']]));
         }
         return $this->render('index', ['news' => $items, 'textBlocks' => $textBlocks, 'main_tabs' => $mainTabs_render]);
+    }
+
+    private function search($query){
+
     }
 
     /**
