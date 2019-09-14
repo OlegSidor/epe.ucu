@@ -48,6 +48,7 @@ AppAsset::register($this);
             ['label' => Yii::t('app', 'Pages'), 'url' => ['/admin/pages'], 'visible' => Yii::$app->user->can('viewPages'), 'active' => Yii::$app->controller->id == 'pages'],
             ['label' => Yii::t('app', 'Permissions'), 'url' => ['/rbac'], 'visible' => Yii::$app->user->can('admin'), 'active' => Yii::$app->controller->module->id == 'rbac' || Yii::$app->controller->id == 'admin'],
             ['label' => Yii::t('app', 'TextBlocks'), 'url' => ['/admin/text-blocks'], 'visible' => Yii::$app->user->can('viewTextBlocks'), 'active' => Yii::$app->controller->id == 'text-blocks'],
+            ['label' => Yii::t('app', 'Templates'), 'url' => ['/admin/templates'], 'visible' => Yii::$app->user->can('viewTemplates'), 'active' => Yii::$app->controller->id == 'templates'],
             Yii::$app->user->isGuest ? (
             ['label' => 'Login', 'url' => ['/site/login']]
             ) : (

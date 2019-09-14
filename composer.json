@@ -30,7 +30,8 @@
         "2amigos/yii2-ckeditor-widget": "^1.0@dev",
         "rmrevin/yii2-fontawesome": "~3.4",
         "evgeniyrru/yii2-slick": "*",
-        "kartik-v/yii2-widget-datepicker": "@dev"
+        "kartik-v/yii2-widget-datepicker": "@dev",
+        "trntv/yii2-aceeditor": "dev-master"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",
