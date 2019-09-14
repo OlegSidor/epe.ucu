@@ -24,30 +24,31 @@ $this->registerJsFile('/js/image-select.js', ['dependence' => \yii\web\JqueryAss
         'kcfinder'      => true,
         'clientOptions' => [
             'language'            => 'uk',
-            'extraPlugins'        => 'iframe,find,divarea,colorbutton,font,btgrid,video,youtube,image2, tableresize,bootstrapTabs',
+            'extraPlugins'        => 'iframe,find,divarea,colorbutton,font,btgrid,video,youtube,image2, tableresize,justify',
             'removePlugins'       => 'image',
             'allowedContent'      => true,
             'image2_alignClasses' => ['image-left', 'image-center', 'image-right'],
         ],
         'kcfOptions'    => [
-            'files' => [
-                'upload' => Yii::$app->user->can('modifyPages') || Yii::$app->user->can('createPages'),
-                'delete' => Yii::$app->user->can('modifyPages') || Yii::$app->user->can('createPages'),
-                'copy'   => Yii::$app->user->can('modifyPages') || Yii::$app->user->can('createPages'),
-                'move'   => Yii::$app->user->can('modifyPages') || Yii::$app->user->can('createPages'),
-                'rename' => Yii::$app->user->can('modifyPages') || Yii::$app->user->can('createPages'),
-            ],
-            'dirs'  => [
-                'create' => Yii::$app->user->can('modifyPages') || Yii::$app->user->can('createPages'),
-                'delete' => Yii::$app->user->can('modifyPages') || Yii::$app->user->can('createPages'),
-                'rename' => Yii::$app->user->can('modifyPages') || Yii::$app->user->can('createPages'),
+            'access' => [
+                'files' => [
+                    'upload' => Yii::$app->user->can('modifyPages') || Yii::$app->user->can('createPages'),
+                    'delete' => Yii::$app->user->can('modifyPages') || Yii::$app->user->can('createPages'),
+                    'copy'   => Yii::$app->user->can('modifyPages') || Yii::$app->user->can('createPages'),
+                    'move'   => Yii::$app->user->can('modifyPages') || Yii::$app->user->can('createPages'),
+                    'rename' => Yii::$app->user->can('modifyPages') || Yii::$app->user->can('createPages'),
+                ],
+                'dirs'  => [
+                    'create' => Yii::$app->user->can('modifyPages') || Yii::$app->user->can('createPages'),
+                    'delete' => Yii::$app->user->can('modifyPages') || Yii::$app->user->can('createPages'),
+                    'rename' => Yii::$app->user->can('modifyPages') || Yii::$app->user->can('createPages'),
+                ],
             ],
         ],
     ]) ?>
     <?php $this->registerJs("CKEDITOR.plugins.addExternal('btgrid', '/js/CKeditorPlugins/btgrid/plugin.js', '');"); ?>
     <?php $this->registerJs("CKEDITOR.plugins.addExternal('video', '/js/CKeditorPlugins/video/plugin.js', '');"); ?>
     <?php $this->registerJs("CKEDITOR.plugins.addExternal('youtube', '/js/CKeditorPlugins/youtube/plugin.js', '');"); ?>
-    <?php $this->registerJs("CKEDITOR.plugins.addExternal('bootstrapTabs', '/js/CKeditorPlugins/bootstrapTabs/plugin.js', '');"); ?>
 
 
     <?= $form->field($model, 'short_desc')->textarea(['maxlength' => true]) ?>
@@ -62,7 +63,7 @@ $this->registerJsFile('/js/image-select.js', ['dependence' => \yii\web\JqueryAss
     </div>
 
     <?= $form->field($model, 'date')->widget(DatePicker::classname(), [
-            'value' => $model->date ?? date('yyyy-mm-dd'),
+        'value'         => $model->date ?? date('yyyy-mm-dd'),
         'pluginOptions' => [
             'autoclose' => true,
             'format'    => 'yyyy-mm-dd',

@@ -1,5 +1,6 @@
 function selectFile() {
-    window.KCFinder = {};
+    window.KCFinder = {
+    };
     window.KCFinder.callBack = function(url) {
         document.getElementById(id).value = url;
         window.KCFinder = null;

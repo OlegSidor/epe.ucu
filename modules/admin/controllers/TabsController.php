@@ -88,9 +88,11 @@ class TabsController extends Controller
      *
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
+     * @throws ForbiddenHttpException
      */
     public function actionUpdate($id)
     {
+        $this->can('modifyTabs');
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -171,6 +173,32 @@ class TabsController extends Controller
      */
     public function can($what)
     {
+        if (Yii::$app->user->can('modifyTabs') || Yii::$app->user->can('createTabs')) {
+            $session = Yii::$app->session;
+            $session->open();
+
+            $_SESSION['KCFINDER']['uploadURL'] = '/upload';
+            $_SESSION['KCFINDER']['uploadDir'] = Yii::getAlias('@app').'/web/upload';
+            $_SESSION['KCFINDER']['thumbsDir'] = '.thumbs';
+            $_SESSION['KCFINDER']['thumbWidth'] = '100';
+            $_SESSION['KCFINDER']['thumbHeight'] = '100';
+            $_SESSION['KCFINDER']['theme'] = 'default';
+            $_SESSION['KCFINDER']['types']['files']['type'] = '';
+            $_SESSION['KCFINDER']['access']['files']     = [
+                'upload' => true,
+                'delete' => true,
+                'copy'   => true,
+                'move'   => true,
+                'rename' => true,
+            ];
+            $_SESSION['KCFINDER']['access']['dirs']      = [
+                'create' => true,
+                'delete' => true,
+                'rename' => true,
+            ];
+            $_SESSION['KCFINDER']['disabled']  = false;
+            $session->close();
+        }
         if (!Yii::$app->user->can($what)) {
             throw new ForbiddenHttpException(Yii::t('app', 'You are not allowed to perform this action.'));
         }

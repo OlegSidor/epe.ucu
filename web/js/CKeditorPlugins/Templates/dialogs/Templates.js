@@ -16,14 +16,30 @@ CKEDITOR.dialog.add('TemplatesDialog', function (editor) {
                 ]
             },
         ],
+        onShow: function() {
+            let selection = editor.getSelection(),
+                element = selection.getStartElement();
+
+            if ( element )
+                element = element.getAscendant( 'templates', true );
+
+            this.element = element;
+        },
         onOk: function () {
             let dialog = this,
                 tpl = dialog.getValueOf( 'default', 'tpl' ),
-                template_element = editor.document.createElement( 'Templates' );
+                template_element = editor.document.createElement( 'Templates' ),
+                element = this.element;
+            if(element){
+                element.setText('TEMPLATE: ' + tpl);
+                element.setAttribute('data-template', tpl);
+            } else {
                 template_element.addClass('template-prev');
-                template_element.setText('TEMPLATE: '+tpl);
+                template_element.setText('TEMPLATE: ' + tpl);
                 template_element.setAttribute('data-template', tpl);
-                editor.insertElement(  template_element );
+                template_element.setAttribute('contenteditable', 'false');
+                editor.insertElement(template_element);
+            }
         },
         buttons: [CKEDITOR.dialog.cancelButton, CKEDITOR.dialog.okButton],
     };

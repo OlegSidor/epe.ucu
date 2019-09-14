@@ -123,26 +123,42 @@ $navbar = $this->params['navbar'];
 <footer>
     <div class="container">
         <div class="row">
-            <div class="col-md-6 col-sm-12">
+            <div class="col-lg-2 col-md-6 col-sm-12 footer-logo-container">
                 <a class="footer-logo" href="/"><img src="/img/logo-round-ukr.png" alt=""></a>
                 <div class="information">
-                    <h2 ><?=Yii::t('app', 'Контакти')?></h2>
+                    <h2><?= Yii::t('app', 'Контакти') ?></h2>
                     <p>вул. Іл. Свєнціцького, 17</p>
                     <p>м Львів, 79011</p>
                     <p>Тел.: (032) 240 94 95</p>
                     <p>Email: epe@ucu.edu.ua</p>
                 </div>
             </div>
-            <div class="col-md-6 col-sm-12 facebook">
-                <div id="fb-root"></div>
-                <script async defer crossorigin="anonymous" src="https://connect.facebook.net/uk_UA/sdk.js#xfbml=1&version=v4.0"></script>
-                <div class="fb-page" data-href="https://www.facebook.com/UkrainianCatholicUniversity/" data-tabs="timeline" data-width="" data-height="100" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/UkrainianCatholicUniversity/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/UkrainianCatholicUniversity/">Український католицький університет UCuniversity</a></blockquote></div>
+            <div class="col-lg-8 col-md-6 col-sm-12">
+                <ul class="footer-container">
+                    <?php foreach ($navbar as $full_nav): ?>
+                        <?php if (!$full_nav['not_in_footer']): ?>
+                            <li class="section">
+                                <ul>
+                                    <li class="parent"><a
+                                                href="<?= Url::to('/' . $full_nav['url']) ?>"><?= $full_nav['label'] ?></a>
+                                    </li>
+                                    <?php if ($full_nav['childs']): ?>
+                                        <?php foreach ($full_nav['childs'] as $child): ?>
+                                            <li><a href="<?= Url::to('/' . $child['url']) ?>"><?= $child['label'] ?></a>
+                                            </li>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
+                                </ul>
+                            </li>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                </ul>
             </div>
         </div>
     </div>
     <div class="copyright">
-        <?= date('Y');?> &copy; Ukrainian Catholic University
-    <!-- TODO: PoweredBy -->
+        <?= date('Y'); ?> &copy; Ukrainian Catholic University
+        <!-- TODO: PoweredBy -->
     </div>
 </footer>
 <?php $this->endBody() ?>

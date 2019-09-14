@@ -7,6 +7,7 @@ use app\models\Pages;
 use app\models\Tabs;
 use app\models\TextBlocks;
 use Yii;
+use yii\base\ViewNotFoundException;
 use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -99,7 +100,10 @@ class SiteController extends Controller
             array_push($items,
                 Html::tag('a', Html::img($new['img']) . Html::tag('div', Html::tag('h3', $new['title']) . Html::tag('p', $new['short_desc']), ['class' => 'desc']), ['class' => 'new', 'href' => '/news/' . $new['url']]));
         }
-        return $this->render('index', ['news' => $items, 'textBlocks' => $textBlocks, 'main_tabs' => $mainTabs_render]);
+        $render = $this->render('index', ['news' => $items, 'textBlocks' => $textBlocks, 'main_tabs' => $mainTabs_render]);
+        $render = $this->addTabs($render);
+        $render = $this->addTemplates($render);
+        return $render;
     }
 
     private function search($query){
@@ -145,12 +149,14 @@ class SiteController extends Controller
      */
     public function addTemplates($content){
         $matches = [];
-        preg_match_all('/<templates class="template-prev" data-template="(.+)">.*<\/templates>/', $content, $matches);
+        preg_match_all('/<templates class="template-prev" contenteditable="false" data-template="(.+)">.*<\/templates>/', $content, $matches);
         foreach ($matches[0] as $key=>$match) {
             $tpl = $matches[1][$key];
-
-            $template = $this->renderAjax('@app/web/templates/'.$tpl);
-
+            try {
+                $template = $this->renderAjax('@app/web/templates/' . $tpl);
+            } catch (ViewNotFoundException $e){
+                $template = $tpl.' '.Yii::t('app', 'Not Found');
+            }
             $content = str_replace($match, $template, $content);
         }
         return $content;
@@ -163,7 +169,7 @@ class SiteController extends Controller
      */
     public function addTabs($content){
         $matches = [];
-        preg_match_all('/<tabs class="tabs-prev" data-parent="(.+)">.*<\/tabs>/', $content, $matches);
+        preg_match_all('/<tabs class="tabs-prev" contenteditable="false" data-parent="(.+)">.*<\/tabs>/', $content, $matches);
         foreach ($matches[0] as $key=>$match) {
             $parent_name = $matches[1][$key];
             if ($parent_name != "Menu") {

@@ -24,11 +24,13 @@ class AppAsset extends AssetBundle
         'css/main.css',
     ];
     public $js = [
-        'js/nav.js'
+        'js/nav.js',
+        'js/slider.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',
         'yii\bootstrap\BootstrapAsset',
         'rmrevin\yii\fontawesome\AssetBundle',
+        '\evgeniyrru\yii2slick\SlickAsset'
     ];
 }

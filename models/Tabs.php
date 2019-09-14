@@ -33,7 +33,7 @@ class Tabs extends \yii\db\ActiveRecord
     {
         return [
             [['name'], 'required'],
-            [['hidden', 'show_in_main'], 'boolean'],
+            [['hidden', 'show_in_main', 'not_in_footer'], 'boolean'],
             [['position', 'parent'], 'integer'],
             [['name', 'url', 'img'], 'string', 'max' => 255],
         ];
@@ -73,6 +73,7 @@ class Tabs extends \yii\db\ActiveRecord
                 if (!$item['parent']) {
                     $arr[$item['id']]['label'] = $item['name'];
                     $arr[$item['id']]['hidden'] = $item['hidden'];
+                    $arr[$item['id']]['not_in_footer'] = $item['not_in_footer'];
                     if($new_nav)
                         $arr[$item['id']]['parent'] = true;
                     if ($url)
@@ -83,12 +84,14 @@ class Tabs extends \yii\db\ActiveRecord
                     if($new_nav){
                         $arr[$path_to_root[0]]['childs'][$item['id']]['label'] = $item['name'];
                         $arr[$path_to_root[0]]['childs'][$item['id']]['hidden'] = $item['hidden'];
+                        $arr[$path_to_root[0]]['childs'][$item['id']]['not_in_footer'] = $item['not_in_footer'];
                         if ($url)
                             $arr[$path_to_root[0]]['childs'][$item['id']]['url'] = $item['url'];
                     } else {
                         $path                       = &Tabs::getChild($path_to_root, $arr);
                         $path[$item['id']]['label'] = $item['name'];
                         $path[$item['id']]['hidden'] = $item['hidden'];
+                        $path[$item['id']]['not_in_footer'] = $item['not_in_footer'];
                         if ($url)
                             $path[$item['id']]['url'] = $item['url'];
                     }

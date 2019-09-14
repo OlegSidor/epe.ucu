@@ -28,6 +28,7 @@ $this->title = Yii::t('app', 'Бакалаврська програма | Ети
         <?=$textBlocks['main_page_text']['text']?>
         <div class="main_tabs">
             <?=$main_tabs?>
+            <?=$textBlocks['main_page_footer']['text']?>
         </div>
     </div>
 </div>

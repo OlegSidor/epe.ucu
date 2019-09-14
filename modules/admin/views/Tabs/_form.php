@@ -39,6 +39,7 @@ $this->registerJsFile('/js/image-select.js', ['dependence' => \yii\web\JqueryAss
 
     <?= $form->field($model, 'hidden')->checkbox(['maxlength' => true]) ?>
     <?= $form->field($model, 'show_in_main')->checkbox(['maxlength' => true]) ?>
+    <?= $form->field($model, 'not_in_footer')->checkbox(['maxlength' => true]) ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>

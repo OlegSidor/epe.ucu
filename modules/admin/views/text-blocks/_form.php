@@ -13,8 +13,6 @@ use dosamigos\ckeditor\CKEditor;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'text')->widget(CKEditor::className(), [
@@ -23,7 +21,7 @@ use dosamigos\ckeditor\CKEditor;
         'kcfinder'      => true,
         'clientOptions' => [
             'language'               => 'uk',
-            'extraPlugins'           => 'find,divarea,colorbutton,font,btgrid,video,youtube,image2, tableresize,bootstrapTabs,Tabs,Templates,simplebutton,colordialog',
+            'extraPlugins'           => 'find,divarea,colorbutton,font,btgrid,video,youtube,image2, tableresize,Tabs,Templates,simplebutton,colordialog,justify',
             'removePlugins'          => 'image',
             'allowedContent'         => true,
             'image2_alignClasses'    => ['image-left', 'image-center', 'image-right'],
@@ -31,24 +29,25 @@ use dosamigos\ckeditor\CKEditor;
             'colorButton_enableMore' => true,
         ],
         'kcfOptions'    => [
-            'files' => [
-                'upload' => Yii::$app->user->can('modifyPages') || Yii::$app->user->can('createPages'),
-                'delete' => Yii::$app->user->can('modifyPages') || Yii::$app->user->can('createPages'),
-                'copy'   => Yii::$app->user->can('modifyPages') || Yii::$app->user->can('createPages'),
-                'move'   => Yii::$app->user->can('modifyPages') || Yii::$app->user->can('createPages'),
-                'rename' => Yii::$app->user->can('modifyPages') || Yii::$app->user->can('createPages'),
-            ],
-            'dirs'  => [
-                'create' => Yii::$app->user->can('modifyPages') || Yii::$app->user->can('createPages'),
-                'delete' => Yii::$app->user->can('modifyPages') || Yii::$app->user->can('createPages'),
-                'rename' => Yii::$app->user->can('modifyPages') || Yii::$app->user->can('createPages'),
+            'access' => [
+                'files' => [
+                    'upload' => Yii::$app->user->can('modifyPages') || Yii::$app->user->can('createPages'),
+                    'delete' => Yii::$app->user->can('modifyPages') || Yii::$app->user->can('createPages'),
+                    'copy'   => Yii::$app->user->can('modifyPages') || Yii::$app->user->can('createPages'),
+                    'move'   => Yii::$app->user->can('modifyPages') || Yii::$app->user->can('createPages'),
+                    'rename' => Yii::$app->user->can('modifyPages') || Yii::$app->user->can('createPages'),
+                ],
+                'dirs'  => [
+                    'create' => Yii::$app->user->can('modifyPages') || Yii::$app->user->can('createPages'),
+                    'delete' => Yii::$app->user->can('modifyPages') || Yii::$app->user->can('createPages'),
+                    'rename' => Yii::$app->user->can('modifyPages') || Yii::$app->user->can('createPages'),
+                ],
             ],
         ],
     ]) ?>
     <?php $this->registerJs("CKEDITOR.plugins.addExternal('btgrid', '/js/CKeditorPlugins/btgrid/plugin.js', '');"); ?>
     <?php $this->registerJs("CKEDITOR.plugins.addExternal('video', '/js/CKeditorPlugins/video/plugin.js', '');"); ?>
     <?php $this->registerJs("CKEDITOR.plugins.addExternal('youtube', '/js/CKeditorPlugins/youtube/plugin.js', '');"); ?>
-    <?php $this->registerJs("CKEDITOR.plugins.addExternal('bootstrapTabs', '/js/CKeditorPlugins/bootstrapTabs/plugin.js', '');"); ?>
     <?php $this->registerJs("CKEDITOR.plugins.addExternal('Tabs', '/js/CKeditorPlugins/Tabs/plugin.js', '');"); ?>
     <?php $this->registerJs("CKEDITOR.plugins.addExternal('Templates', '/js/CKeditorPlugins/Templates/plugin.js', '');"); ?>
     <?php $this->registerJs("CKEDITOR.plugins.addExternal('simplebutton', '/js/CKeditorPlugins/simplebutton/plugin.js', '');"); ?>
