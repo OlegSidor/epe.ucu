@@ -24,7 +24,7 @@ $this->registerJsFile('/js/image-select.js', ['dependence' => \yii\web\JqueryAss
         'kcfinder'      => true,
         'clientOptions' => [
             'language'            => 'uk',
-            'extraPlugins'        => 'iframe,find,divarea,colorbutton,font,btgrid,video,youtube,image2, tableresize,justify',
+            'extraPlugins'        => 'layoutmanager, basewidget,find,divarea,colorbutton,font,btgrid,video,youtube,image2, tableresize,Tabs,Templates,simplebutton,colordialog,justify, Slider, DownloadButton',
             'removePlugins'       => 'image',
             'allowedContent'      => true,
             'image2_alignClasses' => ['image-left', 'image-center', 'image-right'],
@@ -49,6 +49,13 @@ $this->registerJsFile('/js/image-select.js', ['dependence' => \yii\web\JqueryAss
     <?php $this->registerJs("CKEDITOR.plugins.addExternal('btgrid', '/js/CKeditorPlugins/btgrid/plugin.js', '');"); ?>
     <?php $this->registerJs("CKEDITOR.plugins.addExternal('video', '/js/CKeditorPlugins/video/plugin.js', '');"); ?>
     <?php $this->registerJs("CKEDITOR.plugins.addExternal('youtube', '/js/CKeditorPlugins/youtube/plugin.js', '');"); ?>
+    <?php $this->registerJs("CKEDITOR.plugins.addExternal('Tabs', '/js/CKeditorPlugins/Tabs/plugin.js', '');"); ?>
+    <?php $this->registerJs("CKEDITOR.plugins.addExternal('Templates', '/js/CKeditorPlugins/Templates/plugin.js', '');"); ?>
+    <?php $this->registerJs("CKEDITOR.plugins.addExternal('simplebutton', '/js/CKeditorPlugins/simplebutton/plugin.js', '');"); ?>
+    <?php $this->registerJs("CKEDITOR.plugins.addExternal('Slider', '/js/CKeditorPlugins/Slider/plugin.js', '');"); ?>
+    <?php $this->registerJs("CKEDITOR.plugins.addExternal('DownloadButton', '/js/CKeditorPlugins/DownloadButton/plugin.js', '');"); ?>
+    <?php $this->registerJs("CKEDITOR.plugins.addExternal('layoutmanager', '/js/CKeditorPlugins/layoutmanager/plugin.js', '');"); ?>
+    <?php $this->registerJs("CKEDITOR.plugins.addExternal('basewidget', '/js/CKeditorPlugins/basewidget/plugin.js', '');"); ?>
 
 
     <?= $form->field($model, 'short_desc')->textarea(['maxlength' => true]) ?>

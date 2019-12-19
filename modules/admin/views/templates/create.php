@@ -3,14 +3,14 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Tabs */
+/* @var $model app\models\Templates */
 /** @var array $parents */
 
-$this->title = Yii::t('app', 'Create Tabs');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Tabs'), 'url' => ['index']];
+$this->title = Yii::t('app', 'Create Templates');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Templates'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="tabs-create">
+<div class="templates-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

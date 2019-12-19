@@ -158,6 +158,32 @@ class NewsController extends Controller
      */
     public function can($what)
     {
+        if (Yii::$app->user->can('modifyNews') || Yii::$app->user->can('createNews')) {
+            $session = Yii::$app->session;
+            $session->open();
+
+            $_SESSION['KCFINDER']['uploadURL']              = '/upload';
+            $_SESSION['KCFINDER']['uploadDir']              = Yii::getAlias('@app') . '/web/upload';
+            $_SESSION['KCFINDER']['thumbsDir']              = '.thumbs';
+            $_SESSION['KCFINDER']['thumbWidth']             = '100';
+            $_SESSION['KCFINDER']['thumbHeight']            = '100';
+            $_SESSION['KCFINDER']['theme']                  = 'default';
+            $_SESSION['KCFINDER']['types']['files']['type'] = '';
+            $_SESSION['KCFINDER']['access']['files']        = [
+                'upload' => true,
+                'delete' => true,
+                'copy'   => true,
+                'move'   => true,
+                'rename' => true,
+            ];
+            $_SESSION['KCFINDER']['access']['dirs']         = [
+                'create' => true,
+                'delete' => true,
+                'rename' => true,
+            ];
+            $_SESSION['KCFINDER']['disabled']               = false;
+            $session->close();
+        }
         if (!Yii::$app->user->can($what)) {
             throw new ForbiddenHttpException(Yii::t('app', 'You are not allowed to perform this action.'));
         }

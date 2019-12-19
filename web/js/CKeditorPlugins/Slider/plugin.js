@@ -10,7 +10,7 @@ CKEDITOR.plugins.add('Slider', {
         }));
 
         editor.ui.addButton('slider', {
-            label: 'Вставка навігаційного меню',
+            label: 'Слайдер',
             command: 'insertSlider',
             toolbar: 'insert'
         });

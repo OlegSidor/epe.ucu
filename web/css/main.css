@@ -76,7 +76,7 @@ body {
 .nav li a{
     color: white;
     position: relative;
-    font-size: 15px;
+    font-size: 17px;
 }
 
 .nav > li > a:hover, .nav > li > a:focus{
@@ -103,12 +103,12 @@ body {
     display: flex;
 }
 .logo img{
-    width: 75px;
+    width: 100px;
     display: inline-block;
 
 }
 .logo-text img{
-    width: 300px;
+    width: 350px;
 }
 .icon-bar{
     background: white;
@@ -432,6 +432,61 @@ footer .information h2{
 .footer-logo-container{
     margin-bottom: 50px;
 }
+.all-news{
+    position: absolute;
+    z-index: 99;
+    right: 80px;
+    top: 20px;
+    background: rgba(132, 128, 132, 0.7);
+    padding: 10px 50px;
+}
+.all-news a{
+    color: white;
+    position: relative;
+    font-size: 15px;
+    vertical-align: middle;
+    text-decoration: none;
+}
+.all-news a i{
+    margin-left: 5px;
+}
+
+.container.all *{
+    color: #c70000;
+}
+.container.all img{
+    margin: 0 auto 10px;
+    object-fit: cover;
+    max-width: 100%;
+}
+.container.all .all_title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    display: block;
+}
+.container.all .date i{
+    margin-right: 10px;
+}
+.container.all div {
+    margin-bottom: 20px;
+}
+.container.all .wraper{
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0;
+    margin: -20px;
+}
+.container.all .wraper .item{
+    display: inline-block;
+    padding-left: 20px;
+    padding-right: 20px;
+    width: 25%;
+    margin-bottom: 20px;
+}
+.slider_wrap{
+    position: relative;
+}
 @media (max-width: 768px){
     .nav-content{
         display: none;
@@ -446,6 +501,9 @@ footer .information h2{
 
 @media (max-width: 425px) {
     .full-nav-wrap .container .section, footer .footer-container .section{
+        width: 100% !important;
+    }
+    .container.all .wraper .item{
         width: 100% !important;
     }
     .full-nav-wrap .nav-container{
@@ -505,6 +563,9 @@ footer .information h2{
 }
 @media (max-width: 1190px) {
     .full-nav-wrap .container .section, footer .footer-container .section{
+        width: 50%;
+    }
+    .container.all .wraper .item{
         width: 50%;
     }
     .full-nav-wrap .search{

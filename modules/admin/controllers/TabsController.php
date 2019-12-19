@@ -60,8 +60,12 @@ class TabsController extends Controller
         $this->can('createTabs');
         $model = new Tabs();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+        if ($model->load(Yii::$app->request->post())) {
+            $max = Tabs::find()->select('position')->asArray()->orderBy('position DESC')->one();
+            $model->position = $max['position']+1;
+            if ($model->save()) {
+                return $this->redirect(['index']);
+            }
         }
 
         $parents    = ArrayHelper::map(Tabs::find()->where(['parent' => 0])->asArray()->all(), 'id', 'name');
@@ -177,26 +181,26 @@ class TabsController extends Controller
             $session = Yii::$app->session;
             $session->open();
 
-            $_SESSION['KCFINDER']['uploadURL'] = '/upload';
-            $_SESSION['KCFINDER']['uploadDir'] = Yii::getAlias('@app').'/web/upload';
-            $_SESSION['KCFINDER']['thumbsDir'] = '.thumbs';
-            $_SESSION['KCFINDER']['thumbWidth'] = '100';
-            $_SESSION['KCFINDER']['thumbHeight'] = '100';
-            $_SESSION['KCFINDER']['theme'] = 'default';
+            $_SESSION['KCFINDER']['uploadURL']              = '/upload';
+            $_SESSION['KCFINDER']['uploadDir']              = Yii::getAlias('@app') . '/web/upload';
+            $_SESSION['KCFINDER']['thumbsDir']              = '.thumbs';
+            $_SESSION['KCFINDER']['thumbWidth']             = '100';
+            $_SESSION['KCFINDER']['thumbHeight']            = '100';
+            $_SESSION['KCFINDER']['theme']                  = 'default';
             $_SESSION['KCFINDER']['types']['files']['type'] = '';
-            $_SESSION['KCFINDER']['access']['files']     = [
+            $_SESSION['KCFINDER']['access']['files']        = [
                 'upload' => true,
                 'delete' => true,
                 'copy'   => true,
                 'move'   => true,
                 'rename' => true,
             ];
-            $_SESSION['KCFINDER']['access']['dirs']      = [
+            $_SESSION['KCFINDER']['access']['dirs']         = [
                 'create' => true,
                 'delete' => true,
                 'rename' => true,
             ];
-            $_SESSION['KCFINDER']['disabled']  = false;
+            $_SESSION['KCFINDER']['disabled']               = false;
             $session->close();
         }
         if (!Yii::$app->user->can($what)) {

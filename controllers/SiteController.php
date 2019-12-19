@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+use app\models\Announcements;
+use app\models\Events;
 use app\models\News;
 use app\models\Pages;
 use app\models\Tabs;
@@ -43,6 +45,13 @@ class SiteController extends Controller
                     'logout' => ['post'],
                 ],
             ],
+            'httpCache' => [
+                'class' => 'yii\filters\HttpCache',
+                'lastModified' => function ($action, $params) {
+                    return time();
+                },
+                'sessionCacheLimiter' => 'public',
+            ],
         ];
     }
 
@@ -55,7 +64,7 @@ class SiteController extends Controller
     public function beforeAction($action)
     {
 
-        $Tabs                         = ArrayHelper::index(Tabs::find()->asArray()->all(), 'id');
+        $Tabs                         = ArrayHelper::index(Tabs::find()->orderBy('position')->asArray()->all(), 'id');
         $items                        = Tabs::generateTree($Tabs, 1, 1);
         $this->view->params['navbar'] = $items;
         return parent::beforeAction($action);
@@ -94,7 +103,7 @@ class SiteController extends Controller
         $textBlocks = TextBlocks::find()->asArray()->all();
         $textBlocks = ArrayHelper::index($textBlocks, 'name');
         $items = [];
-        $mainTabs = Tabs::findAll(['show_in_main' => 1]);
+        $mainTabs = Tabs::find()->where(['show_in_main' => 1])->orderBy('position')->all();
         $mainTabs_render = $this->renderAjax('tabs_tile', ['childs' => $mainTabs]);
         foreach ($news as $new) {
             array_push($items,
@@ -111,6 +120,24 @@ class SiteController extends Controller
     }
 
     /**
+     * @param $name
+     *
+     * @return string
+     * @throws NotFoundHttpException
+     */
+    public function actionAll($name){
+        $available = ['news' , 'events', 'announcements'];
+        if(!in_array($name,$available))
+            throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+
+        $str = 'app\models\\'.$name;
+        $model = new $str();
+
+        $content = $model::find()->all();
+        return $this->render('view_all', ['content' => $content, 'model' => $model]);
+    }
+
+    /**
      * @param $url
      *
      * @return string
@@ -124,6 +151,42 @@ class SiteController extends Controller
             'model' => $model,
         ]);
 
+    }
+
+    /**
+     * @param $url
+     *
+     * @return string
+     * @throws NotFoundHttpException
+     */
+    public function actionEvents($url){
+        $model = $this->findEvent($url);
+        return $this->render('view_new', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
+     * @param $url
+     *
+     * @return string
+     * @throws NotFoundHttpException
+     */
+    public function actionAnnouncements($url){
+        $model = $this->findAnnouncement($url);
+        return $this->render('view_new', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
+     * @param $url
+     *
+     * @return \yii\console\Response|Response
+     */
+    public function actionDownload($url){
+        $file = Yii::getAlias('@app/web/upload/'.$url);
+        return Yii::$app->response->sendFile($file);
     }
 
     /**
@@ -174,9 +237,9 @@ class SiteController extends Controller
             $parent_name = $matches[1][$key];
             if ($parent_name != "Menu") {
                 $parent = Tabs::findOne(['name' => $parent_name]);
-                $childs = Tabs::findAll(['parent' => $parent->{'id'}]);
+                $childs = Tabs::find()->where(['parent' => $parent->{'id'}])->orderBy('position')->all();
             } else {
-                $childs = Tabs::findAll(['parent' => 0]);
+                $childs = Tabs::find()->where(['parent' => 0])->orderBy('position')->all();
             }
 
             $tabs = $this->renderAjax('tabs_tile', ['childs' => $childs]);
@@ -215,6 +278,42 @@ class SiteController extends Controller
     protected function findNews($url)
     {
         if (($model = News::find()->where(['url' => $url])->one()) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+    }
+
+    /**
+     * Finds the Pages model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     *
+     * @param string $url
+     *
+     * @return Pages|array|\yii\db\ActiveRecord
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findEvent($url)
+    {
+        if (($model = Events::find()->where(['url' => $url])->one()) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+    }
+
+    /**
+     * Finds the Pages model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     *
+     * @param string $url
+     *
+     * @return Pages|array|\yii\db\ActiveRecord
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findAnnouncement($url)
+    {
+        if (($model = Announcements::find()->where(['url' => $url])->one()) !== null) {
             return $model;
         }
 

@@ -38,7 +38,14 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'date',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class'          => 'yii\grid\ActionColumn',
+                'visibleButtons' => [
+                    'update' => Yii::$app->user->can('modifyNews'),
+                    'delete' => Yii::$app->user->can('deleteNews'),
+                    'view'   => Yii::$app->user->can('deleteNews'),
+                ],
+            ],
         ],
     ]); ?>
 

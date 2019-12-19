@@ -10,7 +10,7 @@ CKEDITOR.plugins.add('Templates', {
         }));
 
         editor.ui.addButton('Templates', {
-            label: 'Вставка шаблону меню',
+            label: 'Вставка шаблона',
             command: 'insertTemplates',
             toolbar: 'insert'
         });

@@ -102,7 +102,11 @@ $config = [
                 'user/<controller:([-\w]+|[-\w]+\/)>/<action:([-\w]+|[-\w]+\/)>/<id>' => '/user/<controller>/<action>/<id>',
 
                 'get-tabs'          => '/site/get-tabs',
+                'all/<name:[-\w]+>' => '/site/all',
                 'news/<url:[-\w]+>' => '/site/news',
+                'announcements/<url:[-\w]+>' => '/site/announcements',
+                'events/<url:[-\w]+>' => '/site/events',
+                'download/<url:.*>' => '/site/download/',
                 '<url:.*>'          => 'site/view',
             ],
         ],

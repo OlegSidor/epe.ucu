@@ -72,11 +72,16 @@ function hideNav() {
 }
 
 function adaptiveNav() {
-    if ($('.navbar').height() >= 160) {
+    if ($('.navbar').height() >= 170) {
         $('.nav-content').css('display', 'none');
         $('.right-btns').css('display', 'none');
     } else if ($(window).width() >= 1240) {
         $('.nav-content').css('display', 'block');
         $('.right-btns').css('display', 'block');
     }
+}
+
+function download(element) {
+    let url = element.getAttribute('data-url');
+    window.open(url);
 }

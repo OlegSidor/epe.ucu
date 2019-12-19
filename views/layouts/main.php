@@ -48,10 +48,12 @@ $navbar = $this->params['navbar'];
                     <li class="section">
                         <ul>
                             <li class="parent"><a
-                                        href="<?= Url::to('/' . $full_nav['url']) ?>"><?= $full_nav['label'] ?></a></li>
+                                        href="<?= Url::to(!preg_match('/(^http|^www|^\/)/', $full_nav['url']) ?
+                                            ('/' . $full_nav['url']) : $full_nav['url']) ?>"><?= $full_nav['label'] ?></a></li>
                             <?php if ($full_nav['childs']): ?>
                                 <?php foreach ($full_nav['childs'] as $child): ?>
-                                    <li><a href="<?= Url::to('/' . $child['url']) ?>"><?= $child['label'] ?></a></li>
+                                    <li><a href="<?= Url::to(!preg_match('/(^http|^www|^\/)/', $child['url']) ?
+                                            ('/' . $child['url']) : $child['url']) ?>"><?= $child['label'] ?></a></li>
                                 <?php endforeach; ?>
                             <?php endif; ?>
                         </ul>
@@ -79,14 +81,16 @@ $navbar = $this->params['navbar'];
                     <ul class="nav navbar-nav">
                         <?php foreach ($navbar as $nav): ?>
                             <?php if (!$nav['hidden']): ?>
-                                <li class="nav"><a href="<?= Url::to('/' . $nav['url']) ?>"><?= $nav['label'] ?></a>
+                                <li class="nav"><a href="<?= Url::to(preg_match('/(^http|^www|\/)/', $nav['url']) ?
+                                        $nav['url'] :'/' . $nav['url']) ?>"><?= $nav['label'] ?></a>
                                     <?php if ($nav['childs']): ?>
                                         <div class="childs-wrap">
                                             <ul class="childs">
                                                 <?php foreach ($nav['childs'] as $child): ?>
                                                     <?php if (!$child['hidden']): ?>
                                                         <li class="nav"><a
-                                                                    href="<?= Url::to('/' . $child['url']) ?>"><?= $child['label'] ?></a>
+                                                                    href="<?= Url::to(!preg_match('/(^http|^www|^\/)/', $child['url']) ?
+                                                                        ('/' . $child['url']) : $child['url']) ?>"><?= $child['label'] ?></a>
                                                         </li>
                                                     <?php endif; ?>
                                                 <?php endforeach; ?>
@@ -140,11 +144,13 @@ $navbar = $this->params['navbar'];
                             <li class="section">
                                 <ul>
                                     <li class="parent"><a
-                                                href="<?= Url::to('/' . $full_nav['url']) ?>"><?= $full_nav['label'] ?></a>
+                                                href="<?= Url::to(!preg_match('/(^http|^www|^\/)/', $full_nav['url']) ?
+                                                    ('/' . $full_nav['url']) : $full_nav['url']) ?>"><?= $full_nav['label'] ?></a>
                                     </li>
                                     <?php if ($full_nav['childs']): ?>
                                         <?php foreach ($full_nav['childs'] as $child): ?>
-                                            <li><a href="<?= Url::to('/' . $child['url']) ?>"><?= $child['label'] ?></a>
+                                            <li><a href="<?= Url::to(!preg_match('/(^http|^www|^\/)/', $child['url']) ?
+                                                    ('/' . $child['url']) : $child['url']) ?>"><?= $child['label'] ?></a>
                                             </li>
                                         <?php endforeach; ?>
                                     <?php endif; ?>

@@ -51,6 +51,7 @@ class News extends \yii\db\ActiveRecord
             'date' => Yii::t('app', 'Date'),
             'url' => Yii::t('app', 'Url'),
             'img' => Yii::t('app', 'preview'),
+            'all_title' => Yii::t('app', 'Новини')
         ];
     }
 
